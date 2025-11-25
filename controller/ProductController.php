@@ -1,6 +1,6 @@
 <?php
 
-require_once '../model/Produto.php';
+require_once __DIR__ . '/../model/Produto.php';
 
 class ProductController
 {
@@ -43,5 +43,40 @@ class ProductController
     {
         $stmt = $this->produtoModel->getAll();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function listarPorId($id)
+    {
+        $stmt = $this->produtoModel->getById($id);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function editar($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nome = htmlspecialchars(trim($_POST['nome']));
+            $preco = floatval($_POST['preco']);
+            $estoque = intval($_POST['estoq']);
+
+            if (empty($nome) || $preco <= 0 || $estoque < 0) {
+                return "Dados inválidos!";
+            }
+
+            $this->produtoModel->id = $id;
+            $this->produtoModel->nome = $nome;
+            $this->produtoModel->preco = $preco;
+            $this->produtoModel->estoque = $estoque;
+
+            if ($this->produtoModel->update()) {
+                return "Produto atualizado com sucesso!";
+            }
+            return "Erro ao atualizar o produto!";
+        }
+    }
+
+    public function excluir($id)
+    {
+        $this->produtoModel->id = $id;
+        return $this->produtoModel->delete();
     }
 }

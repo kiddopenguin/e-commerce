@@ -11,7 +11,7 @@ include '../view/header.php'
 
 <main>
     <h1>Gerenciar Produtos</h1>
-    <button>+ Novo Produto</button>
+    <a href="cadastrar.php"><button>+ Novo Produto</button></a>
     <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
         <thead>
             <tr style="background-color: #333; color: white;">
@@ -28,18 +28,18 @@ include '../view/header.php'
                     <td colspan="5" style="text-align: center; padding: 20px;">Nenhum produto cadastrado.</td>
                 </tr>
             <?php else: ?>
-                <?php foreach($produtos as $produto): ?>
+                <?php foreach ($produtos as $produto): ?>
                     <tr>
                         <td><?= $produto['id'] ?></td>
                         <td><?= $produto['nome'] ?></td>
                         <td>R$ <?= $produto['preco'] ?></td>
                         <td><?= $produto['estoque'] ?></td>
                         <td>
-                            <button>Editar</button>
-                            <button>Remover</button>
+                            <a href="editar.php?id=<?= $produto['id'] ?>"><button>Editar</button></a>
+                            <a href="excluir.php?id=<?= $produto['id'] ?>" onclick="return confirm('Deseja realmente excluir?')"><button>Remover</button></a>
                         </td>
                     </tr>
-                <?php endforeach;?>
+                <?php endforeach; ?>
             <?php endif; ?>
         </tbody>
     </table>

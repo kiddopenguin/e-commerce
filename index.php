@@ -1,6 +1,9 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-require_once 'controller/ProductController.php';
+require_once ($basePath ?? '') . 'controller/ProductController.php';
 
 $controller = new ProductController();
 $produtos = $controller->listarTodos();
