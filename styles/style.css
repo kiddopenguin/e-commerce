@@ -1,0 +1,44 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: gray;
+}
+
+header {
+    background-color: black;
+    height: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+header a {
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px;
+    color: white;
+    font-weight: bolder;
+}
+
+main {
+    text-align: center;
+    background-color: white;
+    max-width: 800px;
+    margin: auto;
+}
+
+.produto {
+    text-align: left;
+    display: inline-block;
+    max-width: 300px;
+    margin: 30px;
+    padding: 10px;
+}
+
+.form-produto {
+    /* display: block; */
+    margin: 10px;
+    padding: 10px;
+}
