@@ -68,4 +68,13 @@ class ProdutoModel
 
         return $stmt->execute();
     }
+
+    public function updateEstoque()
+    {
+        $query = "UPDATE " . $this->table_name . " SET estoque = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->estoque);
+        $stmt->bindParam(2, $this->id);
+        return $stmt->execute();
+    }
 }
