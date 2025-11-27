@@ -54,23 +54,37 @@ include 'view/header.php';
                     <?php foreach ($itens as $item): ?>
                         <tr>
                             <td><?= $item['nome'] ?></td>
-                            <td></td>
+                            <td><?= number_format($item['preco'], 2, ',', '.') ?></td>
                             <td>
                                 <form method="post">
-
+                                    <input type="hidden" name="produto_id" value="<?= $item['id'] ?>">
+                                    <input type="number" name="quantidade" value="<?= $item['quantidade'] ?>">
+                                    <button type="submit" name="atualizar">Atualizar</button>
                                 </form>
                             </td>
-                            <td></td>
+                            <td><?= number_format($item['subtotal'], 2, ',', '.') ?></td>
                             <td>
                                 <form method="post">
-
+                                    <input type="hidden" name="produto_id" value="<?= $item['id'] ?>">
+                                    <button type="submit" name="remover">Remover</button>
                                 </form>
                             </td>
                         </tr>
                     <?php endforeach; ?>
-                    <form method="post"><button type="submit" name="limpar">Limpar</button></form>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">Total:</td>
+                        <td>R$ <?= number_format($total, 2, ',', '.') ?></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
             </table>
+            <div>
+                <form method="post"><button type="submit" name="limpar">Limpar</button></form>
+                <button>Continuar comprando</button>
+                <button>Finalizar compra</button>
+            </div>
 
         <?php endif; ?>
     </div>
