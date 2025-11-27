@@ -1,12 +1,14 @@
 <?php
+require_once 'auth.php';
 require_once '../controller/ProductController.php';
 $controller = new ProductController();
 $produtos = $controller->listarTodos();
 
 $pageTitle = 'Painel Administrativo';
 $cssPath = '../styles/style.css';
+$basePath = '../';
 
-include '../view/headerAdmin.php'
+include $basePath . 'view/headerAdmin.php';
 ?>
 
 <main>

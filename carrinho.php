@@ -25,8 +25,7 @@ $total = $dadosCarrinho['total'];
 $pageTitle = 'Meu Carrinho';
 $cssPath = 'styles/style.css';
 $basePath = '';
-
-include 'view/header.php';
+include $basePath . 'view/header.php';
 ?>
 
 <main>

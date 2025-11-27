@@ -1,6 +1,8 @@
 <?php
 
+require_once 'auth.php';
 require_once '../controller/ProductController.php';
+
 
 $controller = new ProductController();
 $mensagem = '';
@@ -15,8 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $pageTitle = 'Cadastrar Produto';
 $cssPath = '../styles/style.css';
+$basePath = '../';
 
-include '../view/header.php';
+include $basePath . 'view/header.php';
 ?>
 
 <main>

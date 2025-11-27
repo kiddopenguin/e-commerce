@@ -1,4 +1,8 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once '../controller/CarrinhoController.php';
 
 $carrinhoCrtl = new CarrinhoController();
@@ -18,8 +22,11 @@ $totalItens = $carrinhoCrtl->contarItems();
 <body>
     <header>
         <nav>
+            <?php if (isset($_SESSION['user_id']) && $_SESSION['user_type'] === 'admin'): ?>
+                <span style="color: white;">Bem vindo Administrador</span>
+            <?php endif;?>
             <a href="../index.php">Produtos</a>
             <a href="../carrinho.php">Carrinho <?php if ($totalItens > 0) : ?>(<?= $totalItens ?>)<?php endif; ?></a>
-            <a href="#">Logout</a>
+            <a href="../logout.php">Logout</a>
         </nav>
     </header>
