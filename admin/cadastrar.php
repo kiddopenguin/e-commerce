@@ -37,8 +37,8 @@ include '../view/header.php';
             <input type="number" name="estoq">
 
             <button type="submit">Cadastrar</button>
-            <button style="margin-bottom: 10px;">Cancelar</button>
         </form>
+        <a href="index.php"><button style="margin-bottom: 10px;">Cancelar</button></a>
     </div>
 </main>
 

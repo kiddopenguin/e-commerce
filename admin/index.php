@@ -6,7 +6,7 @@ $produtos = $controller->listarTodos();
 $pageTitle = 'Painel Administrativo';
 $cssPath = '../styles/style.css';
 
-include '../view/header.php'
+include '../view/headerAdmin.php'
 ?>
 
 <main>

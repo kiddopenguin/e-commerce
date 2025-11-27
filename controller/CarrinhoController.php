@@ -76,10 +76,10 @@ class CarrinhoController
 
             if ($produto) {
                 $subtotal = $produto['preco'] * $quantidade;
-                $itens = [
-                    'id' => $produtoId['id'],
-                    'nome' => $produtoId['nome'],
-                    'preco' => $produtoId['preco'],
+                $itens[] = [
+                    'id' => $produto['id'],
+                    'nome' => $produto['nome'],
+                    'preco' => $produto['preco'],
                     'quantidade' => $quantidade,
                     'subtotal' => $subtotal
                 ];

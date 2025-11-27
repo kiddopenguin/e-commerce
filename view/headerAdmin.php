@@ -1,9 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-require_once __DIR__ . '/../controller/CarrinhoController.php';
+require_once '../controller/CarrinhoController.php';
 
 $carrinhoCrtl = new CarrinhoController();
 $totalItens = $carrinhoCrtl->contarItems();
@@ -22,8 +18,8 @@ $totalItens = $carrinhoCrtl->contarItems();
 <body>
     <header>
         <nav>
-            <a href="index.php">Produtos</a>
-            <a href="carrinho.php">Carrinho <?php if ($totalItens > 0) : ?>(<?= $totalItens ?>)<?php endif; ?></a>
-            <a href="admin/index.php">Admin</a>
+            <a href="../index.php">Produtos</a>
+            <a href="../carrinho.php">Carrinho <?php if ($totalItens > 0) : ?>(<?= $totalItens ?>)<?php endif; ?></a>
+            <a href="#">Logout</a>
         </nav>
     </header>
