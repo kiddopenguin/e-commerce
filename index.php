@@ -27,33 +27,52 @@ include 'view/header.php';
 
 
 <main>
-    <h1>Nossos Produtos</h1>
-    <?php if ($mensagem): ?>
-        <p><?= $mensagem ?></p>
-    <?php endif; ?>
-
-    <article>
-        <?php if (empty($produtos)): ?>
-            <p>Nenhum produto disponível no momento.</p>
-        <?php else: ?>
-            <?php foreach ($produtos as $produto): ?>
-                <div class="produto">
-                    <h2><?= htmlspecialchars($produto['nome']) ?></h2>
-                    <p><strong>Preço:</strong> R$ <?= number_format($produto['preco'], 2, ',', '.') ?></p>
-                    <p><strong>Estoque:</strong> <?= $produto['estoque'] ?> unidades</p>
-
-                    <?php if ($produto['estoque'] > 0): ?>
-                        <form style="display: inline;" method="post">
-                            <input type="hidden" name="produto_id" value="<?= $produto['id'] ?>">
-                            <button type="submit" name="adicionar_carrinho">Adicionar ao carrinho</button>
-                        </form>
-                    <?php else: ?>
-                        <button disabled="disabled">Sem Estoque</button>
-                    <?php endif; ?>
-                </div>
-            <?php endforeach; ?>
+    <div class="container">
+        <h1 class="text-center mb-4">Nossos Produtos</h1>
+        <?php if ($mensagem): ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i><?= $mensagem ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
         <?php endif; ?>
-    </article>
+
+        <?php if (empty($produtos)): ?>
+            <div class="alert alert-info text-center">
+                <i class="bi bi-info-circle me-2"></i>Nenhum produto disponível no momento.
+            </div>
+        <?php else: ?>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <?php foreach ($produtos as $produto): ?>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= htmlspecialchars($produto['nome']) ?></h5>
+                                <p class="card-text text-muted">
+                                    <i class="bi bi-box-seam"></i> Estoque: <?= $produto['estoque'] ?> unidades
+                                </p>
+                                <h4 class="text-primary mb-3">
+                                    <i class="bi bi-tag-fill"></i> R$ <?= number_format($produto['preco'], 2, ',', '.') ?>
+                                </h4>
+                                
+                                <?php if ($produto['estoque'] > 0): ?>
+                                    <form method="post" class="d-grid">
+                                        <input type="hidden" name="produto_id" value="<?= $produto['id'] ?>">
+                                        <button type="submit" name="adicionar_carrinho" class="btn btn-primary">
+                                            <i class="bi bi-cart-plus"></i> Adicionar ao Carrinho
+                                        </button>
+                                    </form>
+                                <?php else: ?>
+                                    <button class="btn btn-secondary" disabled>
+                                        <i class="bi bi-x-circle"></i> Sem Estoque
+                                    </button>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    </div>
 </main>
 
 <?php include 'view/footer.php' ?>
