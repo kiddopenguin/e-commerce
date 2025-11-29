@@ -101,7 +101,6 @@ header {
 }
 
 .navbar-brand:hover {
-    transform: scale(1.05);
     color: var(--secondary-light) !important;
 }
 
@@ -266,7 +265,6 @@ h3 {
 }
 
 .produto:hover {
-    transform: translateY(-8px);
     box-shadow: var(--shadow-xl);
 }
 
@@ -274,11 +272,6 @@ h3 {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    transition: transform var(--transition-base);
-}
-
-.produto:hover img {
-    transform: scale(1.05);
 }
 
 .produto .card-body {
@@ -323,18 +316,12 @@ h3 {
 }
 
 .card:hover {
-    transform: translateY(-8px);
     box-shadow: var(--shadow-xl);
 }
 
 .card-img-top {
     height: 250px;
     object-fit: cover;
-    transition: transform var(--transition-base);
-}
-
-.card:hover .card-img-top {
-    transform: scale(1.05);
 }
 
 .card-title {
@@ -366,7 +353,6 @@ h3 {
 .btn-primary:hover {
     background: var(--secondary-dark);
     border-color: var(--secondary-dark);
-    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 
@@ -378,7 +364,6 @@ h3 {
 .btn-danger:hover {
     background: var(--accent-hover);
     border-color: var(--accent-hover);
-    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 
@@ -390,7 +375,6 @@ h3 {
 .btn-success:hover {
     background: #229954;
     border-color: #229954;
-    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 
@@ -524,13 +508,6 @@ footer p {
 /* ========================================
    Animações e Efeitos
    ======================================== */
-.hover-lift {
-    transition: transform var(--transition-base);
-}
-
-.hover-lift:hover {
-    transform: translateY(-4px);
-}
 
 /* ========================================
    Responsividade

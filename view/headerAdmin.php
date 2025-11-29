@@ -46,6 +46,11 @@ $totalItens = $carrinhoCrtl->contarItems();
                                 <?php endif; ?>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pedidos.php">
+                                <i class="bi bi-list-check"></i> Meus Pedidos
+                            </a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="bi bi-speedometer2"></i> Admin
@@ -72,7 +77,5 @@ $totalItens = $carrinhoCrtl->contarItems();
                     </ul>
                 </div>
             </div>
-        </nav>
-    </header>
         </nav>
     </header>
