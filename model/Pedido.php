@@ -6,7 +6,7 @@ class PedidoModel
 {
     private $conn;
     private $table_pedidos = "tb_pedidos";
-    private $table_item_pedidos = "tb_items_pedidos";
+    private $table_item_pedidos = "tb_items_pedido";
 
     public $id;
     public $usuario_id;
