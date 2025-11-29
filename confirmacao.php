@@ -70,7 +70,7 @@ include 'view/header.php';
         </tbody>
     </table>
     <br>
-    <button>Continuar Comprando</button>
-    <button>Meus pedidos</button>
+    <button onclick="location.href='index.php'">Continuar Comprando</button>
+    <button onclick="location.href='pedidos.php'">Meus pedidos</button>
 </main>
 <?php include 'view/footer.php'; ?>

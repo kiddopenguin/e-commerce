@@ -33,9 +33,6 @@ include 'view/header.php';
                     <th>Data</th>
                     <th>Total</th>
                     <th>Status</th>
-                    <?php if ($_SESSION['user_type'] === 'admin'): ?>
-                        <th>Ações</th>
-                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
@@ -45,11 +42,6 @@ include 'view/header.php';
                         <td><?= date('d/m/Y', strtotime($pedido['data_pedido'])) ?></td>
                         <td>R$ <?= number_format($pedido['total'], 2, ',', '.') ?></td>
                         <td><?= ucfirst($pedido['status']) ?></td>
-                        <?php if ($_SESSION['user_type'] === 'admin'): ?>
-                            <td><button>Ver detalhes</button></td>
-                        <?php endif; ?>
-
-
                     </tr>
                 <?php endforeach; ?>
             </tbody>

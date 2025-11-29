@@ -14,17 +14,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+
 ?>
 
 <?php if (!empty($msg)): ?>
     <p><?= $msg ?></p>
 <?php endif; ?>
 
-<h1>Login</h1>
-<form method="post">
-    <label for="email">E-mail:</label>
-    <input type="email" name="email" required>
-    <label for="senha">Senha:</label>
-    <input type="password" name="senha" required>
-    <button type="submit">Login</button>
-</form>
+<main>
+    <h1>Login</h1>
+    <form method="post">
+        <label for="email">E-mail:</label>
+        <input type="email" name="email" required>
+        <label for="senha">Senha:</label>
+        <input type="password" name="senha" required>
+        <button type="submit">Login</button>
+    </form>
+</main>

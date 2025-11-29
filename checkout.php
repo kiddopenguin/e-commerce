@@ -42,7 +42,7 @@ include 'view/header.php';
     <h2>Resumo do Pedido</h2>
     <?php if (empty($dados['itens'])): ?>
         <p>O carrinho está vazio!</p>
-        <button><a href="#">Voltar as compras!</a></button>
+        <button onclick="location.href='index.php'">Voltar as compras!</button>
     <?php else: ?>
         <table style="margin:auto;">
             <thead>
