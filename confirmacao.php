@@ -33,44 +33,101 @@ include 'view/header.php';
 ?>
 
 <main>
-    <h1>Pedido Confirmado!</h1>
-    <p>Pedido #<?= $pedido_id ?> realizado com sucesso!</p>
-    <br>
-    <h2>Detalhes do Pedido</h2>
-    <p>Status: <?= ucfirst($dados['pedido']['status']); ?></p>
-    <p>Total: R$ <?= number_format($dados['pedido']['total'], 2, ',', '.'); ?></p>
-    <p>Data do pedido: <?= date('d/m/Y H:i', strtotime($dados['pedido']['data_pedido'])) ?></p>
-    <br>
-    <h3>Detalhes da Entrega:</h3>
-    <p><?= $dados['pedido']['nome'] ?></p>
-    <p><?= $dados['pedido']['endereco'] ?></p>
-    <p><?= $dados['pedido']['cidade'] ?>/<?= $dados['pedido']['estado'] ?> </p>
-    <p><?= $dados['pedido']['cep'] ?></p>
-    <p><?= $dados['pedido']['telefone'] ?></p>
-    <br>
-    <h3>Items:</h3>
-    <table style="margin: auto;">
-        <thead>
-            <tr>
-                <th>Produto</th>
-                <th>Quantidade</th>
-                <th>Preço</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($dados['itens'] as $item): ?>
-                <tr>
-                    <td><?= $item['produto_nome'] ?></td>
-                    <td><?= $item['quantidade'] ?></td>
-                    <td>R$ <?= number_format($item['preco_unitario'], 2, ',', '.') ?></td>
-                    <td>R$ <?= number_format($item['subtotal'], 2, ',', '.') ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <br>
-    <button onclick="location.href='index.php'">Continuar Comprando</button>
-    <button onclick="location.href='pedidos.php'">Meus pedidos</button>
+    <div class="container">
+        <div class="text-center mb-4">
+            <div class="alert alert-success shadow" role="alert">
+                <i class="bi bi-check-circle-fill fs-1 d-block mb-3"></i>
+                <h1 class="alert-heading">Pedido Confirmado!</h1>
+                <p class="mb-0">Pedido <strong>#<?= $pedido_id ?></strong> realizado com sucesso!</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-receipt"></i> Detalhes do Pedido</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <p class="text-muted mb-1"><i class="bi bi-info-circle"></i> Status</p>
+                                <span class="badge bg-<?= $dados['pedido']['status'] == 'pendente' ? 'warning' : ($dados['pedido']['status'] == 'confirmado' ? 'info' : 'success') ?> fs-6">
+                                    <?= ucfirst($dados['pedido']['status']); ?>
+                                </span>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="text-muted mb-1"><i class="bi bi-currency-dollar"></i> Total</p>
+                                <h5 class="text-success">R$ <?= number_format($dados['pedido']['total'], 2, ',', '.'); ?></h5>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="text-muted mb-1"><i class="bi bi-calendar"></i> Data do Pedido</p>
+                                <p class="mb-0"><?= date('d/m/Y H:i', strtotime($dados['pedido']['data_pedido'])) ?></p>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <h6 class="text-muted mb-3"><i class="bi bi-truck"></i> Detalhes da Entrega</h6>
+                        <address>
+                            <strong><i class="bi bi-person"></i> <?= $dados['pedido']['nome'] ?></strong><br>
+                            <i class="bi bi-geo-alt"></i> <?= $dados['pedido']['endereco'] ?><br>
+                            <i class="bi bi-map"></i> <?= $dados['pedido']['cidade'] ?>/<?= $dados['pedido']['estado'] ?><br>
+                            <i class="bi bi-mailbox"></i> CEP: <?= $dados['pedido']['cep'] ?><br>
+                            <i class="bi bi-telephone"></i> <?= $dados['pedido']['telefone'] ?>
+                        </address>
+
+                        <hr>
+
+                        <h6 class="text-muted mb-3"><i class="bi bi-bag"></i> Itens do Pedido</h6>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Produto</th>
+                                        <th class="text-center">Quantidade</th>
+                                        <th class="text-end">Preço Unit.</th>
+                                        <th class="text-end">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($dados['itens'] as $item): ?>
+                                        <tr>
+                                            <td><?= $item['produto_nome'] ?></td>
+                                            <td class="text-center"><span class="badge bg-secondary"><?= $item['quantidade'] ?></span></td>
+                                            <td class="text-end">R$ <?= number_format($item['preco_unitario'], 2, ',', '.') ?></td>
+                                            <td class="text-end"><strong>R$ <?= number_format($item['subtotal'], 2, ',', '.') ?></strong></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3 justify-content-center mb-4">
+                    <button onclick="location.href='index.php'" class="btn btn-outline-primary">
+                        <i class="bi bi-arrow-left"></i> Continuar Comprando
+                    </button>
+                    <button onclick="location.href='pedidos.php'" class="btn btn-primary">
+                        <i class="bi bi-list-check"></i> Meus Pedidos
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow">
+                    <div class="card-body text-center">
+                        <i class="bi bi-truck fs-1 text-primary mb-3"></i>
+                        <h5>Status de Entrega</h5>
+                        <p class="text-muted">Acompanhe seu pedido na página "Meus Pedidos"</p>
+                        <div class="alert alert-info">
+                            <small><i class="bi bi-info-circle"></i> Você receberá atualizações sobre o status do seu pedido</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <?php include 'view/footer.php'; ?>

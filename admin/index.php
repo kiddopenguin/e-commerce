@@ -12,39 +12,69 @@ include $basePath . 'view/headerAdmin.php';
 ?>
 
 <main>
-    <h1>Gerenciar Produtos</h1>
-    <a href="cadastrar.php"><button>+ Novo Produto</button></a>
-    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-        <thead>
-            <tr style="background-color: #333; color: white;">
-                <th style="padding: 10px; border: 1px solid #ddd;">ID</th>
-                <th style="padding: 10px; border: 1px solid #ddd;">Nome</th>
-                <th style="padding: 10px; border: 1px solid #ddd;">Preço</th>
-                <th style="padding: 10px; border: 1px solid #ddd;">Estoque</th>
-                <th style="padding: 10px; border: 1px solid #ddd;">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (empty($produtos)): ?>
-                <tr>
-                    <td colspan="5" style="text-align: center; padding: 20px;">Nenhum produto cadastrado.</td>
-                </tr>
-            <?php else: ?>
-                <?php foreach ($produtos as $produto): ?>
-                    <tr>
-                        <td><?= $produto['id'] ?></td>
-                        <td><?= $produto['nome'] ?></td>
-                        <td>R$ <?= $produto['preco'] ?></td>
-                        <td><?= $produto['estoque'] ?></td>
-                        <td>
-                            <a href="editar.php?id=<?= $produto['id'] ?>"><button>Editar</button></a>
-                            <a href="excluir.php?id=<?= $produto['id'] ?>" onclick="return confirm('Deseja realmente excluir?')"><button>Remover</button></a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="bi bi-box-seam"></i> Gerenciar Produtos</h1>
+            <a href="cadastrar.php" class="btn btn-success btn-lg">
+                <i class="bi bi-plus-circle"></i> Novo Produto
+            </a>
+        </div>
+        
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th><i class="bi bi-hash"></i> ID</th>
+                                <th><i class="bi bi-box"></i> Nome</th>
+                                <th><i class="bi bi-tag"></i> Preço</th>
+                                <th><i class="bi bi-stack"></i> Estoque</th>
+                                <th class="text-center"><i class="bi bi-gear"></i> Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($produtos)): ?>
+                                <tr>
+                                    <td colspan="5" class="text-center py-5">
+                                        <i class="bi bi-inbox fs-1 text-muted d-block mb-3"></i>
+                                        <p class="text-muted">Nenhum produto cadastrado.</p>
+                                    </td>
+                                </tr>
+                            <?php else: ?>
+                                <?php foreach ($produtos as $produto): ?>
+                                    <tr>
+                                        <td><strong><?= $produto['id'] ?></strong></td>
+                                        <td><?= $produto['nome'] ?></td>
+                                        <td><span class="badge bg-primary">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></span></td>
+                                        <td>
+                                            <?php if ($produto['estoque'] > 10): ?>
+                                                <span class="badge bg-success"><?= $produto['estoque'] ?> un.</span>
+                                            <?php elseif ($produto['estoque'] > 0): ?>
+                                                <span class="badge bg-warning"><?= $produto['estoque'] ?> un.</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-danger">Esgotado</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="btn-group" role="group">
+                                                <a href="editar.php?id=<?= $produto['id'] ?>" class="btn btn-sm btn-outline-primary">
+                                                    <i class="bi bi-pencil"></i> Editar
+                                                </a>
+                                                <a href="excluir.php?id=<?= $produto['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Deseja realmente excluir este produto?')">
+                                                    <i class="bi bi-trash"></i> Remover
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 <?php include '../view/footer.php' ?>

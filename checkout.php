@@ -34,61 +34,126 @@ include 'view/header.php';
 
 ?>
 
-<?php if ($msg): ?>
-    <p> <?= $msg ?> </p>
-<?php endif; ?>
-
 <main>
-    <h2>Resumo do Pedido</h2>
-    <?php if (empty($dados['itens'])): ?>
-        <p>O carrinho está vazio!</p>
-        <button onclick="location.href='index.php'">Voltar as compras!</button>
-    <?php else: ?>
-        <table style="margin:auto;">
-            <thead>
-                <tr>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Preço</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($dados['itens'] as $item): ?>
-                    <tr>
-                        <td><?= $item['nome'] ?></td>
-                        <td><?= $item['quantidade'] ?></td>
-                        <td>R$ <?= number_format($item['preco'], 2, ',', '.') ?></td>
-                        <td>R$ <?= number_format($item['subtotal'], 2, ',', '.') ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="3">Total:</td>
-                    <td>R$ <?= $dados['total'] ?></td>
-                </tr>
-            </tfoot>
-        </table>
-        <hr>
-        <div class="formulario-end">
-            <h2>Cadastro de Entrega</h2>
-            <form method="post">
-                <input type="hidden" name="user_nome" value="<?= $_SESSION['user_nome'] ?>">
-                <label for="endereco">Endereço:</label>
-                <input type="text" name="endereco" required>
-                <label for="cidade">Cidade:</label>
-                <input type="text" name="cidade" required>
-                <label for="estado">Estado:</label>
-                <input type="text" name="estado" required>
-                <label for="cep">CEP:</label>
-                <input type="text" name="cep" required>
-                <label for="telefone">Telefone:</label>
-                <input type="tel" name="telefone" required>
-                <button type="submit">Confirmar Pedido</button>
-            </form>
-        </div>
-    <?php endif; ?>
+    <div class="container">
+        <h1 class="text-center mb-4">
+            <i class="bi bi-check-circle"></i> Finalizar Compra
+        </h1>
+        
+        <?php if ($msg): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i><?= $msg ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
+
+        <?php if (empty($dados['itens'])): ?>
+            <div class="text-center">
+                <div class="alert alert-warning">
+                    <i class="bi bi-cart-x fs-1 d-block mb-3"></i>
+                    <h4>O carrinho está vazio!</h4>
+                </div>
+                <button onclick="location.href='index.php'" class="btn btn-primary btn-lg">
+                    <i class="bi bi-arrow-left"></i> Voltar às Compras
+                </button>
+            </div>
+        <?php else: ?>
+            <div class="row">
+                <div class="col-lg-7 mb-4">
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="bi bi-truck"></i> Dados de Entrega</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post">
+                                <input type="hidden" name="user_nome" value="<?= $_SESSION['user_nome'] ?>">
+                                
+                                <div class="mb-3">
+                                    <label for="endereco" class="form-label">
+                                        <i class="bi bi-geo-alt"></i> Endereço Completo
+                                    </label>
+                                    <input type="text" class="form-control" id="endereco" name="endereco" required placeholder="Rua, número, complemento">
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-8 mb-3">
+                                        <label for="cidade" class="form-label">
+                                            <i class="bi bi-building"></i> Cidade
+                                        </label>
+                                        <input type="text" class="form-control" id="cidade" name="cidade" required placeholder="Sua cidade">
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3">
+                                        <label for="estado" class="form-label">
+                                            <i class="bi bi-map"></i> Estado
+                                        </label>
+                                        <input type="text" class="form-control" id="estado" name="estado" required placeholder="UF" maxlength="2">
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cep" class="form-label">
+                                            <i class="bi bi-mailbox"></i> CEP
+                                        </label>
+                                        <input type="text" class="form-control" id="cep" name="cep" required placeholder="00000-000">
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="telefone" class="form-label">
+                                            <i class="bi bi-telephone"></i> Telefone
+                                        </label>
+                                        <input type="tel" class="form-control" id="telefone" name="telefone" required placeholder="(00) 00000-0000">
+                                    </div>
+                                </div>
+                                
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <i class="bi bi-check-circle"></i> Confirmar Pedido
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-5">
+                    <div class="card shadow">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="mb-0"><i class="bi bi-receipt"></i> Resumo do Pedido</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Produto</th>
+                                            <th class="text-center">Qtd</th>
+                                            <th class="text-end">Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($dados['itens'] as $item): ?>
+                                            <tr>
+                                                <td><?= $item['nome'] ?></td>
+                                                <td class="text-center"><?= $item['quantidade'] ?></td>
+                                                <td class="text-end">R$ <?= number_format($item['subtotal'], 2, ',', '.') ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Total:</h5>
+                                <h3 class="text-success mb-0">R$ <?= $dados['total'] ?></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
 </main>
 
 <?php include 'view/footer.php'; ?>

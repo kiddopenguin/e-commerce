@@ -39,25 +39,55 @@ include '../view/header.php';
 ?>
 
 <main>
-    <div class="form-produto">
-        <h1>Editar Produto</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0"><i class="bi bi-pencil-square"></i> Editar Produto</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <?php if ($mensagem): ?>
+                            <div class="alert alert-<?= strpos($mensagem, 'sucesso') !== false ? 'success' : 'danger' ?> alert-dismissible fade show" role="alert">
+                                <i class="bi bi-<?= strpos($mensagem, 'sucesso') !== false ? 'check-circle' : 'exclamation-triangle' ?>-fill me-2"></i><?= $mensagem ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        <?php endif; ?>
 
-        <?php if ($mensagem): ?>
-            <p><?= $mensagem ?></p>
-        <?php endif; ?>
+                        <form method="post">
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">
+                                    <i class="bi bi-box"></i> Nome do Produto
+                                </label>
+                                <input type="text" class="form-control" id="nome" name="nome" value="<?= htmlspecialchars($produto['nome']) ?>" required>
+                            </div>
 
-        <form method="post">
-            <label for="nome">Nome:</label>
-            <input type="text" name="nome" value="<?= htmlspecialchars($produto['nome']) ?>">
+                            <div class="mb-3">
+                                <label for="preco" class="form-label">
+                                    <i class="bi bi-tag"></i> Preço (R$)
+                                </label>
+                                <input type="number" class="form-control" id="preco" name="preco" value="<?= $produto['preco'] ?>" step="0.01" min="0" required>
+                            </div>
 
-            <label for="preco">Preço:</label>
-            <input type="number" name="preco" value="<?= $produto['preco'] ?>">
+                            <div class="mb-3">
+                                <label for="estoq" class="form-label">
+                                    <i class="bi bi-stack"></i> Quantidade em Estoque
+                                </label>
+                                <input type="number" class="form-control" id="estoq" name="estoq" value="<?= $produto['estoque'] ?>" min="0" required>
+                            </div>
 
-            <label for="estoq">Estoque:</label>
-            <input type="number" name="estoq" value="<?= $produto['estoque'] ?>">
-
-            <button type="submit">Editar</button>
-            <a href="index.php"><button style="margin-bottom: 10px;">Cancelar</button></a>
-        </form>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-check-circle"></i> Salvar Alterações
+                                </button>
+                                <a href="index.php" class="btn btn-outline-secondary">
+                                    <i class="bi bi-x-circle"></i> Cancelar
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
