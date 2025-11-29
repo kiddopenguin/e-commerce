@@ -81,8 +81,8 @@ include $basePath . 'view/header.php';
             </table>
             <div>
                 <form method="post"><button type="submit" name="limpar">Limpar</button></form>
-                <button>Continuar comprando</button>
-                <button>Finalizar compra</button>
+                <button onclick="location.href='index.php'">Continuar comprando</button>
+                <button onclick="location.href='checkout.php'">Finalizar compra</button>
             </div>
 
         <?php endif; ?>
