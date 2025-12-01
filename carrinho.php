@@ -107,12 +107,12 @@ include $basePath . 'view/header.php';
                 </form>
                 
                 <div class="d-flex gap-2">
-                    <button onclick="location.href='index.php'" class="btn btn-outline-primary">
+                    <a href="index.php" class="btn btn-outline-primary">
                         <i class="bi bi-arrow-left"></i> Continuar Comprando
-                    </button>
-                    <button onclick="location.href='checkout.php'" class="btn btn-success btn-lg">
+                    </a>
+                    <a href="checkout.php" class="btn btn-success btn-lg">
                         <i class="bi bi-check-circle"></i> Finalizar Compra
-                    </button>
+                    </a>
                 </div>
             </div>
         <?php endif; ?>

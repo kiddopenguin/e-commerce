@@ -106,12 +106,12 @@ include 'view/header.php';
                 </div>
 
                 <div class="d-flex gap-3 justify-content-center mb-4">
-                    <button onclick="location.href='index.php'" class="btn btn-outline-primary">
+                    <a href="index.php" class="btn btn-outline-primary">
                         <i class="bi bi-arrow-left"></i> Continuar Comprando
-                    </button>
-                    <button onclick="location.href='pedidos.php'" class="btn btn-primary">
+                    </a>
+                    <a href="pedidos.php" class="btn btn-primary">
                         <i class="bi bi-list-check"></i> Meus Pedidos
-                    </button>
+                    </a>
                 </div>
             </div>
 

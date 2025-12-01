@@ -65,9 +65,9 @@ include 'view/header.php';
                     <i class="bi bi-cart-x fs-1 d-block mb-3"></i>
                     <h4>O carrinho está vazio!</h4>
                 </div>
-                <button onclick="location.href='index.php'" class="btn btn-primary btn-lg">
+                <a href="index.php" class="btn btn-primary btn-lg">
                     <i class="bi bi-arrow-left"></i> Voltar às Compras
-                </button>
+                </a>
             </div>
         <?php else: ?>
             <div class="row">
@@ -187,7 +187,7 @@ include 'view/header.php';
                             <hr>
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0">Total:</h5>
-                                <h3 class="text-success mb-0">R$ <?= $dados['total'] ?></h3>
+                                <h3 class="text-success mb-0">R$ <?= number_format($dados['total'], 2, ',', '.') ?></h3>
                             </div>
                         </div>
                     </div>
