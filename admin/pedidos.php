@@ -17,6 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mudar_status'])) {
 
 $pedidos = $pedidoCtrl->listarTodos();
 
+$pedidosAtivos = array_filter($pedidos, function($pedido) {
+    return $pedido['status'] !== 'cancelado';
+});
+
+$pedidosCancelados = array_filter($pedidos, function($pedido) {
+    return $pedido['status'] === 'cancelado';
+});
+
 $cssPath = '../styles/style.css';
 $basePath = '../';
 $pageTitle = 'Gerenciar Pedidos';
@@ -33,14 +41,14 @@ include '../view/headerAdmin.php';
                 <i class="bi bi-arrow-left"></i> Voltar
             </a>
         </div>
-        
+
         <?php if ($msg): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <i class="bi bi-check-circle-fill me-2"></i><?= $msg ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php endif; ?>
-        
+
         <div class="card shadow">
             <div class="card-body">
                 <div class="table-responsive">
@@ -56,7 +64,7 @@ include '../view/headerAdmin.php';
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (empty($pedidos)): ?>
+                            <?php if (empty($pedidosAtivos)): ?>
                                 <tr>
                                     <td colspan="6" class="text-center py-5">
                                         <i class="bi bi-inbox fs-1 text-muted d-block mb-3"></i>
@@ -64,7 +72,7 @@ include '../view/headerAdmin.php';
                                     </td>
                                 </tr>
                             <?php else: ?>
-                                <?php foreach ($pedidos as $pedido): ?>
+                                <?php foreach ($pedidosAtivos as $pedido): ?>
                                     <tr>
                                         <td><strong>#<?= $pedido['id'] ?></strong></td>
                                         <td><?= htmlspecialchars($pedido['nome']) ?></td>
@@ -86,9 +94,9 @@ include '../view/headerAdmin.php';
                                             </form>
                                         </td>
                                         <td class="text-center">
-                                            <button class="btn btn-sm btn-outline-info" onclick="alert('Funcionalidade em desenvolvimento')">
-                                                <i class="bi bi-eye"></i> Ver
-                                            </button>
+                                            <a href="detalhes_pedido.php?id=<?= $pedido['id'] ?>" class="btn btn-sm btn-outline-info">
+                                                <i class="bi bi-eye"></i> Ver Detalhes
+                                            </a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -98,7 +106,50 @@ include '../view/headerAdmin.php';
                 </div>
             </div>
         </div>
-        
+
+        <?php if (!empty($pedidosCancelados)): ?>
+            <h1 class="mt-5 mb-4 text-center"><i class="bi bi-x-circle"></i> Pedidos Cancelados</h1>
+            
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th><i class="bi bi-hash"></i> ID</th>
+                                    <th><i class="bi bi-person"></i> Cliente</th>
+                                    <th><i class="bi bi-calendar"></i> Data</th>
+                                    <th><i class="bi bi-currency-dollar"></i> Total</th>
+                                    <th><i class="bi bi-info-circle"></i> Status</th>
+                                    <th class="text-center"><i class="bi bi-eye"></i> Detalhes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($pedidosCancelados as $pedido): ?>
+                                    <tr>
+                                        <td><strong>#<?= $pedido['id'] ?></strong></td>
+                                        <td><?= htmlspecialchars($pedido['nome']) ?></td>
+                                        <td><?= date('d/m/Y H:i', strtotime($pedido['data_pedido'])) ?></td>
+                                        <td><span class="badge bg-secondary">R$ <?= number_format($pedido['total'], 2, ',', '.') ?></span></td>
+                                        <td>
+                                            <span class="badge bg-danger">
+                                                <i class="bi bi-x-circle"></i> Cancelado
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="detalhes_pedido.php?id=<?= $pedido['id'] ?>" class="btn btn-sm btn-outline-info">
+                                                <i class="bi bi-eye"></i> Ver Detalhes
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
         <div class="mt-4">
             <div class="alert alert-info">
                 <i class="bi bi-info-circle me-2"></i>

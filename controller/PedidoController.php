@@ -27,7 +27,6 @@ class PedidoController
                 return "Seu carrinho está vazio!";
             }
 
-            // Recebendo dados e sanitização inicial
 
             $nome = htmlspecialchars(trim($_POST['user_nome']));
             $endereco = htmlspecialchars(trim($_POST['endereco']));
@@ -36,7 +35,6 @@ class PedidoController
             $cep = preg_replace('/[^0-9]/', '', $_POST['cep']);
             $telefone = preg_replace('/[^0-9]/', '', $_POST['telefone']);
 
-            // Validações Básicas 
             if (empty($nome) || empty($endereco) || empty($cidade)) {
                 return "Preencha todos os campos!";
             }
@@ -49,7 +47,6 @@ class PedidoController
                 return "CEP inválido!";
             }
 
-            // Preenchendo Pedido
             $this->model->usuario_id = $_SESSION['user_id'];
             $this->model->total = $dados['total'];
             $this->model->status = 'pendente';
@@ -60,16 +57,27 @@ class PedidoController
             $this->model->cep = $cep;
             $this->model->telefone = $telefone;
 
-            // Criando o pedido
+            $produtoModel = new ProdutoModel();
+
+            foreach ($dados['itens'] as $item) {
+                $produtoAtual = $produtoModel->getById($item['id']);
+                $prod = $produtoAtual->fetch(PDO::FETCH_ASSOC);
+
+                if (!$prod) {
+                    return "Erro: Produto '{$item['nome']}' não encontrado!";
+                }
+
+                if ($item['quantidade'] > $prod['estoque']) {
+                    return "Estoque insuficiente para '{$item['nome']}'. Disponível: {$prod['estoque']} unidade(s). Por favor, ajuste seu carrinho.";
+                }
+            }
+
             $pedido_id = $this->model->create();
 
             if (!$pedido_id) {
                 return "Erro ao criar pedido!";
             }
 
-            // Adicionando itens no pedido
-
-            $produtoModel = new ProdutoModel();
 
             foreach ($dados['itens'] as $item) {
                 $this->model->addItem(
@@ -79,7 +87,6 @@ class PedidoController
                     $item['preco']
                 );
 
-                // Baixa em estoque
                 $produto = $produtoModel->getById($item['id']);
                 $prod = $produto->fetch(PDO::FETCH_ASSOC);
 

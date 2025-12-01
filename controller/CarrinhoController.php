@@ -21,7 +21,25 @@ class CarrinhoController
             return "Dados inválidos!";
         }
 
-        // Somando quantidade individual se já existir no carrinho
+        require_once __DIR__ . '/ProductController.php';
+        $produtoCtrl = new ProductController();
+        $produto = $produtoCtrl->listarPorId($produtoId);
+
+        if (!$produto) {
+            return "Produto não encontrado!";
+        }
+
+        $quantidadeAtual = isset($_SESSION['carrinho'][$produtoId]) ? $_SESSION['carrinho'][$produtoId] : 0;
+        $quantidadeTotal = $quantidadeAtual + $quantidade;
+
+        if ($quantidadeTotal > $produto['estoque']) {
+            $disponiveis = $produto['estoque'] - $quantidadeAtual;
+            if ($disponiveis <= 0) {
+                return "Produto sem estoque disponível!";
+            }
+            return "Estoque insuficiente! Você já tem {$quantidadeAtual} no carrinho. Disponível para adicionar: {$disponiveis} unidade(s).";
+        }
+
         if (isset($_SESSION['carrinho'][$produtoId])) {
             $_SESSION['carrinho'][$produtoId] += $quantidade;
         } else {
@@ -53,6 +71,18 @@ class CarrinhoController
         }
 
         if (isset($_SESSION['carrinho'][$produtoId])) {
+            require_once __DIR__ . '/ProductController.php';
+            $produtoCtrl = new ProductController();
+            $produto = $produtoCtrl->listarPorId($produtoId);
+
+            if (!$produto) {
+                return "Produto não encontrado!";
+            }
+
+            if ($quantidade > $produto['estoque']) {
+                return "Estoque insuficiente! Disponível: {$produto['estoque']} unidade(s).";
+            }
+
             $_SESSION['carrinho'][$produtoId] = $quantidade;
             return "Quantidade atualizada!";
         }

@@ -1,5 +1,7 @@
 <?php
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 require_once ($basePath ?? '') . 'controller/ProductController.php';
 require_once ($basePath ?? '') . 'controller/CarrinhoController.php';
@@ -7,10 +9,17 @@ require_once ($basePath ?? '') . 'controller/CarrinhoController.php';
 $controller = new ProductController();
 $carrinhoCrtl = new CarrinhoController();
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['adicionar_carrinho'])) {
     $produtoId = intval($_POST['produto_id']);
-    $mensagem = $carrinhoCrtl->adicionar($produtoId, 1);
+    $_SESSION['mensagem_carrinho'] = $carrinhoCrtl->adicionar($produtoId, 1);
+    header('Location: index.php');
+    exit;
+}
+
+$mensagem = '';
+if (isset($_SESSION['mensagem_carrinho'])) {
+    $mensagem = $_SESSION['mensagem_carrinho'];
+    unset($_SESSION['mensagem_carrinho']);
 }
 
 $produtos = $controller->listarTodos();
@@ -18,7 +27,6 @@ $produtos = $controller->listarTodos();
 $pageTitle = 'Produtos';
 $cssPath = 'styles/style.css';
 $basePath = '';
-$mensagem = '';
 
 include 'view/header.php';
 
@@ -30,8 +38,13 @@ include 'view/header.php';
     <div class="container">
         <h1 class="text-center mb-4">Nossos Produtos</h1>
         <?php if ($mensagem): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="bi bi-check-circle-fill me-2"></i><?= $mensagem ?>
+            <?php
+            $isSuccess = strpos($mensagem, 'sucesso') !== false;
+            $alertClass = $isSuccess ? 'alert-success' : 'alert-danger';
+            $iconClass = $isSuccess ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill';
+            ?>
+            <div class="alert <?= $alertClass ?> alert-dismissible fade show" role="alert">
+                <i class="bi <?= $iconClass ?> me-2"></i><?= htmlspecialchars($mensagem) ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php endif; ?>
@@ -53,7 +66,7 @@ include 'view/header.php';
                                 <h4 class="text-primary mb-3">
                                     <i class="bi bi-tag-fill"></i> R$ <?= number_format($produto['preco'], 2, ',', '.') ?>
                                 </h4>
-                                
+
                                 <?php if ($produto['estoque'] > 0): ?>
                                     <form method="post" class="d-grid">
                                         <input type="hidden" name="produto_id" value="<?= $produto['id'] ?>">
