@@ -18,6 +18,7 @@ class PedidoModel
     public $estado;
     public $cep;
     public $telefone;
+    public $forma_pag;
 
     public function __construct()
     {
@@ -27,7 +28,7 @@ class PedidoModel
 
     public function create()
     {
-        $query = "INSERT INTO " . $this->table_pedidos . "(usuario_id, total, status, nome, endereco, cidade, estado, cep, telefone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO " . $this->table_pedidos . "(usuario_id, total, status, nome, endereco, cidade, estado, cep, telefone, forma_pag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->usuario_id);
         $stmt->bindParam(2, $this->total);
@@ -38,6 +39,7 @@ class PedidoModel
         $stmt->bindParam(7, $this->estado);
         $stmt->bindParam(8, $this->cep);
         $stmt->bindParam(9, $this->telefone);
+        $stmt->bindParam(10, $this->forma_pag);
         if ($stmt->execute()) {
             return $this->conn->lastInsertId(); // Retorna o ID do pedido, caso consiga criar o pedido.
         }

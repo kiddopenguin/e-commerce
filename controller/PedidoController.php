@@ -34,9 +34,15 @@ class PedidoController
             $estado = strtoupper(trim($_POST['estado']));
             $cep = preg_replace('/[^0-9]/', '', $_POST['cep']);
             $telefone = preg_replace('/[^0-9]/', '', $_POST['telefone']);
+            $forma_pag = htmlspecialchars(trim($_POST['forma_pag']));
 
-            if (empty($nome) || empty($endereco) || empty($cidade)) {
+            if (empty($nome) || empty($endereco) || empty($cidade) || empty($forma_pag)) {
                 return "Preencha todos os campos!";
+            }
+
+            $formasPagamentoPermitidas = ['pix', 'credito', 'debito', 'paypal'];
+            if (!in_array($forma_pag, $formasPagamentoPermitidas)) {
+                return "Forma de pagamento inválida!";
             }
 
             if (strlen($estado) != 2) {
@@ -56,6 +62,7 @@ class PedidoController
             $this->model->estado = $estado;
             $this->model->cep = $cep;
             $this->model->telefone = $telefone;
+            $this->model->forma_pag = $forma_pag;
 
             $produtoModel = new ProdutoModel();
 

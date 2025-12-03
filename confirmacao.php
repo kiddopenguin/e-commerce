@@ -50,17 +50,30 @@ include 'view/header.php';
                     </div>
                     <div class="card-body">
                         <div class="row mb-3">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <p class="text-muted mb-1"><i class="bi bi-info-circle"></i> Status</p>
                                 <span class="badge bg-<?= $dados['pedido']['status'] == 'pendente' ? 'warning' : ($dados['pedido']['status'] == 'confirmado' ? 'info' : 'success') ?> fs-6">
                                     <?= ucfirst($dados['pedido']['status']); ?>
                                 </span>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <p class="text-muted mb-1"><i class="bi bi-credit-card"></i> Pagamento</p>
+                                <?php
+                                $formasPagamento = [
+                                    'pix' => ['icone' => '💰', 'nome' => 'PIX'],
+                                    'credito' => ['icone' => '💳', 'nome' => 'Cartão de Crédito'],
+                                    'debito' => ['icone' => '💳', 'nome' => 'Cartão de Débito'],
+                                    'paypal' => ['icone' => '🅿️', 'nome' => 'PayPal']
+                                ];
+                                $forma = $dados['pedido']['forma_pag'] ?? 'pix';
+                                ?>
+                                <p class="mb-0 fw-bold"><?= $formasPagamento[$forma]['icone'] ?> <?= $formasPagamento[$forma]['nome'] ?></p>
+                            </div>
+                            <div class="col-md-3">
                                 <p class="text-muted mb-1"><i class="bi bi-currency-dollar"></i> Total</p>
                                 <h5 class="text-success">R$ <?= number_format($dados['pedido']['total'], 2, ',', '.'); ?></h5>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <p class="text-muted mb-1"><i class="bi bi-calendar"></i> Data do Pedido</p>
                                 <p class="mb-0"><?= date('d/m/Y H:i', strtotime($dados['pedido']['data_pedido'])) ?></p>
                             </div>

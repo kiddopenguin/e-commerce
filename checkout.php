@@ -148,6 +148,19 @@ include 'view/header.php';
                                     </div>
                                 </div>
 
+                                <div class="mb-3">
+                                    <label for="forma_pag" class="form-label">
+                                        <i class="bi bi-credit-card"></i> Forma de Pagamento
+                                    </label>
+                                    <select name="forma_pag" id="forma_pag" class="form-select" required>
+                                        <option value="" disabled selected>Selecione a forma de pagamento</option>
+                                        <option value="pix">💰 PIX</option>
+                                        <option value="credito">💳 Cartão de Crédito</option>
+                                        <option value="debito">💳 Cartão de Débito</option>
+                                        <option value="paypal">🅿️ PayPal</option>
+                                    </select>
+                                </div>
+
                                 <div class="d-grid">
                                     <button type="submit" class="btn btn-success btn-lg" <?= !$temEstq ? 'disabled' : ''; ?>>
                                         <i class="bi bi-check-circle"></i> Confirmar Pedido
